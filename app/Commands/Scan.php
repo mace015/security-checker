@@ -3,6 +3,7 @@
 namespace App\Commands;
 
 use App\Scans\Https;
+use App\Scans\HstsHeader;
 use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 
@@ -28,7 +29,8 @@ class Scan extends Command
      * @var array
      */
     protected $scans = [
-        'HTTPS only' => Https::class
+        'HTTPS only'  => Https::class,
+        'HSTS header' => HstsHeader::class
     ];
 
     /**
