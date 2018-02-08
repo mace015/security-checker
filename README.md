@@ -3,6 +3,7 @@ Security-checker is a automatic tool written by [Mace Muilman](https://github.co
 ## Current implemented tests/scans:
 
 - Server over HTTPS only.
+- HSTS header.
 
 ## Documentation
 
