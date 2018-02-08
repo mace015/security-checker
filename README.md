@@ -1,7 +1,6 @@
 Security-checker is a automatic tool written by [Mace Muilman](https://github.com/mace015) that runs a series of test against a domain to asset its security.
 
 ## Current implemented tests/scans:
-------
 
 - Server over HTTPS only.
 
