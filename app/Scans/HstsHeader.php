@@ -2,11 +2,10 @@
 
 namespace App\Scans;
 
-use App\Scans\BaseScan;
-use App\Scans\ScanInterface;
-
 class HstsHeader extends BaseScan implements ScanInterface
 {
+    protected $name = 'HSTS header';
+
     public function perform($console, $domain)
     {
         // Filter the protocol from the domain.
@@ -14,9 +13,11 @@ class HstsHeader extends BaseScan implements ScanInterface
         
         $hsts = exec('curl -s -I https://'. $domain .' | grep \'^Strict\'');
         if (!str_contains($hsts, 'Strict-Transport-Security')) {
-            return $this->error('HSTS header not set!');
+            $this->error('HSTS header not set!');
+            return $this;
         }
 
-        return $this->success('HSTS header set!');
+        $this->success('HSTS header set!');
+        return $this;
     }
 }

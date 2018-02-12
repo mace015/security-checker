@@ -4,7 +4,6 @@ namespace App\Commands;
 
 use App\Scans\Https;
 use App\Scans\HstsHeader;
-use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 
 class Scan extends Command
@@ -29,8 +28,8 @@ class Scan extends Command
      * @var array
      */
     protected $scans = [
-        'HTTPS only'  => Https::class,
-        'HSTS header' => HstsHeader::class
+        Https::class,
+        HstsHeader::class
     ];
 
     /**
@@ -56,9 +55,9 @@ class Scan extends Command
 
         $results = [];
 
-        foreach ($this->scans as $name => $scan) {
-            $instance       = new $scan;
-            $results[$name] = $instance->perform($this, $this->domain());
+        foreach ($this->scans as $scan) {
+            $instance  = new $scan;
+            $results[] = $instance->perform($this, $this->domain());
 
             $bar->advance();
         }
@@ -94,11 +93,11 @@ class Scan extends Command
     {
         $headers = ['Scan', 'Status', 'Message'];
 
-        foreach ($results as $key => $result) {
+        foreach ($results as $key => $scan) {
             $results[$key] = [
-                'name'    => $key,
-                'status'  => ($result[0])? "<bg=green;>Success</>": "<bg=red;>Error</>",
-                'message' => $result[1]
+                'name'    => $scan->getName(),
+                'status'  => ($scan->getStatus())? "<bg=green;>Success</>": "<bg=red;>Error</>",
+                'message' => $scan->getMessage()
             ];
         }
 
